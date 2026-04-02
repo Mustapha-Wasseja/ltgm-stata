@@ -1,0 +1,89 @@
+LTGM Stata Package -- Data Sources
+====================================
+
+The bundled country dataset (ltgm_country_data.dta) combines data from
+the following sources. All data used under their respective open licenses.
+
+
+1. Penn World Tables 11.0 (PWT)
+   ------------------------------------------------------------------
+   Citation:
+     Feenstra, R.C., R. Inklaar and M.P. Timmer (2015).
+     "The Next Generation of the Penn World Table."
+     American Economic Review, 105(10), 3150-3182.
+
+   Variables sourced:
+     - TFP growth (multiple averaging periods: 20yr, 15yr, 10yr, 5yr)
+     - Capital share / labour share
+     - Depreciation rate
+     - Capital-output ratio (K/Y)
+     - Human capital growth
+
+   URL: https://www.rug.nl/ggdc/productivity/pwt/
+   License: Creative Commons Attribution 4.0 (CC BY 4.0)
+
+   Notes:
+     PWT 11.0 is the primary source. When PWT 11.0 produces implausibly
+     low TFP values (0 <= g_tfp < 0.5%) due to capital stock methodology
+     revisions, the package falls back to PWT 10.0 then PWT 9.0.
+     Negative TFP values are preserved as genuine economic signals.
+
+
+2. World Development Indicators (WDI), World Bank
+   ------------------------------------------------------------------
+   Citation:
+     World Bank (2024). World Development Indicators.
+     Washington, D.C.: The World Bank Group.
+
+   Variables sourced:
+     - GDP per capita (GNI Atlas method, current USD)
+     - Gross fixed capital formation (% of GDP) -- investment rate
+     - Poverty headcount ratio at $2.15/day (2017 PPP)
+     - Poverty headcount ratio at $3.65/day (2017 PPP)
+     - Poverty headcount ratio at $6.85/day (2017 PPP)
+     - Gini coefficient
+     - Labour force participation rate (total, male, female)
+     - GDP growth rate (10-year average)
+
+   URL: https://data.worldbank.org
+   License: Creative Commons Attribution 4.0 (CC BY 4.0)
+
+
+3. UN World Population Prospects 2024 (UNWPP)
+   ------------------------------------------------------------------
+   Citation:
+     United Nations, Department of Economic and Social Affairs,
+     Population Division (2024). World Population Prospects 2024.
+
+   Variables sourced:
+     - Population growth rate (medium variant, annual projections)
+     - Working-age to total population ratio (15-64)
+
+   URL: https://population.un.org/wpp/
+   License: Creative Commons Attribution 3.0 IGO (CC BY 3.0 IGO)
+
+
+4. IMF World Economic Outlook (WEO)
+   ------------------------------------------------------------------
+   Variables available in CSV (not primary source for defaults):
+     - Investment rate (WEO forecast variant)
+
+   URL: https://www.imf.org/en/Publications/WEO
+   License: Subject to IMF terms of use
+
+
+5. IMF Fiscal Affairs Department (FAD)
+   ------------------------------------------------------------------
+   Variables available in CSV (not primary source for defaults):
+     - Capital-output ratio (FAD estimate)
+     - Public investment share
+
+   URL: https://www.imf.org/en/Research
+   License: Subject to IMF terms of use
+
+
+Reference year
+------------------------------------
+All cross-sectional indicators are referenced to 2022 (the most recent
+year with broad coverage across PWT 11.0 and WDI). Population growth
+projections use the UNWPP 2025 medium variant as the base-year value.

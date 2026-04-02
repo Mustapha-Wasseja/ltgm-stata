@@ -1,0 +1,123 @@
+{
+  "delta": {
+    "label": "Depreciation Rate",
+    "sources": {
+      "PWT 11.0 (2023)": "delta_pwt110",
+      "PWT 10.01": "delta_pwt1001",
+      "PWT 10.0": "delta_pwt100",
+      "PWT 9.1": "delta_pwt91",
+      "PWT 9.0": "delta_pwt90",
+      "AMECO": "delta_ameco"
+    },
+    "default": "PWT 11.0 (2023)"
+  },
+  "labor_share": {
+    "label": "Labor Share (1-alpha)",
+    "sources": {
+      "PWT 11.0 (2023)": "labsh_pwt110",
+      "PWT 10.01": "labsh_pwt1001",
+      "PWT 10.0": "labsh_pwt100",
+      "PWT 9.1": "labsh_pwt91",
+      "PWT 9.0": "labsh_pwt90",
+      "TED": "labsh_ted"
+    },
+    "default": "PWT 11.0 (2023)"
+  },
+  "ky_ratio": {
+    "label": "Initial K/Y Ratio",
+    "sources": {
+      "PWT 11.0 (2023)": "ky_pwt110",
+      "PWT 10.01": "ky_pwt1001",
+      "PWT 10.0": "ky_pwt100",
+      "PWT 9.1": "ky_pwt91",
+      "PWT 9.0": "ky_pwt90",
+      "MFMOD (2019)": "ky_mfmod",
+      "AMECO": "ky_ameco",
+      "PIM": "ky_pim",
+      "IMF FAD": "ky_fad"
+    },
+    "default": "PWT 11.0 (2023)"
+  },
+  "gdppc": {
+    "label": "Initial GDP/GNI per Capita",
+    "sources": {
+      "WDI GNI PC Atlas": "gni_pc_atlas",
+      "WDI GDP PC": "gdp_pc_wdi",
+      "GDP PC Level": "gdp_pc_level"
+    },
+    "default": "WDI GNI PC Atlas"
+  },
+  "hc_growth": {
+    "label": "Human Capital Growth",
+    "sources": {
+      "PWT 11.0, 10yr avg (2014-23)": "hc_growth_pwt110_10yr",
+      "PWT 11.0, 5yr avg (2019-23)": "hc_growth_pwt110_05yr",
+      "PWT 11.0, 15yr avg (2009-23)": "hc_growth_pwt110_15yr",
+      "PWT 11.0, 20yr avg (2004-23)": "hc_growth_pwt110_20yr",
+      "PWT 11.0, All years": "hc_growth_pwt110_00yr",
+      "PWT 10.0, 10yr avg": "hc_growth_pwt100_10yr",
+      "PWT 9.1, 10yr avg": "hc_growth_pwt91_10yr",
+      "PWT 9.0, 10yr avg": "hc_growth_pwt90_10yr"
+    },
+    "default": "PWT 11.0, 10yr avg (2014-23)"
+  },
+  "tfp_growth": {
+    "label": "TFP Growth",
+    "sources": {
+      "PWT 11.0, 20yr avg (2004-23)": "tfp_growth_pwt110_20yr",
+      "PWT 11.0, 10yr avg (2014-23)": "tfp_growth_pwt110_10yr",
+      "PWT 11.0, 5yr avg (2019-23)": "tfp_growth_pwt110_05yr",
+      "PWT 11.0, 15yr avg (2009-23)": "tfp_growth_pwt110_15yr",
+      "PWT 11.0, All years": "tfp_growth_pwt110_00yr",
+      "PWT 10.0, 20yr avg": "tfp_growth_pwt100_20yr",
+      "PWT 9.1, 20yr avg": "tfp_growth_pwt91_20yr",
+      "PWT 9.0, 20yr avg": "tfp_growth_pwt90_20yr",
+      "TED, 20yr avg": "tfp_growth_ted_20yr"
+    },
+    "default": "PWT 11.0, 20yr avg (2004-23)"
+  },
+  "inv_gdp": {
+    "label": "Investment/GDP",
+    "sources": {
+      "PWT, 10yr avg": "inv_gdp_pwt_10yr",
+      "PWT, 5yr avg": "inv_gdp_pwt_05yr",
+      "PWT, 15yr avg": "inv_gdp_pwt_15yr",
+      "PWT, 20yr avg": "inv_gdp_pwt_20yr",
+      "WDI, 10yr avg": "inv_gdp_wdi_10yr",
+      "WDI, 5yr avg": "inv_gdp_wdi_05yr",
+      "WEO Forecast": "inv_gdp_weo_forecast",
+      "WEO, 10yr avg": "inv_gdp_weo_10yr",
+      "IMF FAD, 10yr avg": "inv_gdp_fad_10yr",
+      "AMECO, 10yr avg": "inv_gdp_ameco_10yr"
+    },
+    "default": "PWT, 10yr avg"
+  },
+  "pc_kg_k": {
+    "label": "Public Capital Share (Kg/K)",
+    "sources": {
+      "Default": "kg_k_share",
+      "IMF FAD": "kg_k_fad"
+    },
+    "default": "Default"
+  },
+  "pc_efficiency": {
+    "label": "Public Capital Efficiency",
+    "sources": {
+      "IEI": "iei",
+      "PIMI": "pimi",
+      "PIMI-based Efficiency": "efficiency_pimi"
+    },
+    "default": "IEI"
+  },
+  "pc_ig_i": {
+    "label": "Public Investment Share (Ig/I)",
+    "sources": {
+      "Current Year": "ig_i_current",
+      "5yr Average": "ig_i_5yr",
+      "10yr Average": "ig_i_10yr",
+      "15yr Average": "ig_i_15yr",
+      "20yr Average": "ig_i_20yr"
+    },
+    "default": "10yr Average"
+  }
+}

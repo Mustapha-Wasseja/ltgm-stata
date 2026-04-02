@@ -1,0 +1,5 @@
+v 3
+d LTGM - Long Term Growth Model for Stata
+d World Bank LTGM Team
+d
+p ltgm LTGM: Long Term Growth Model (Standard Solow) for Stata 13+
