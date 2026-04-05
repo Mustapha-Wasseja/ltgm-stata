@@ -77,6 +77,37 @@ program define ltgm_run, rclass
     restore
 
     /* ------------------------------------------------------------------ */
+    /*  Dispatch to PC engine if model is "pc"                             */
+    /* ------------------------------------------------------------------ */
+    if "`model_lbl'" == "pc" {
+        local _pc_opts `"scenario(`scenario') savepath(`savepath')"'
+        if "`nosave'" != "" {
+            local _pc_opts `"`_pc_opts' nosave"'
+        }
+        if "`nodisplay'" != "" {
+            local _pc_opts `"`_pc_opts' nodisplay"'
+        }
+        local _pc_opts `"`_pc_opts' milestone(`milestone')"'
+        ltgm_pc_run, `_pc_opts'
+
+        * Forward return values from ltgm_pc_run
+        return local  resultsfile `"`r(resultsfile)'"'
+        return local  scenario    "`r(scenario)'"
+        return local  model       "`r(model)'"
+        return local  country     `"`r(country)'"'
+        return scalar year0       = r(year0)
+        return scalar horizon     = r(horizon)
+        return scalar y_pc_final  = r(y_pc_final)
+        return scalar y_pc_init   = r(y_pc_init)
+        return scalar pov_final   = r(pov_final)
+        return scalar avg_g_ypc   = r(avg_g_ypc)
+        return scalar kg_y_final  = r(kg_y_final)
+        return scalar kp_y_final  = r(kp_y_final)
+        return scalar nyears      = r(nyears)
+        exit
+    }
+
+    /* ------------------------------------------------------------------ */
     /*  Compute number of years and build results dataset                  */
     /* ------------------------------------------------------------------ */
     local nyears = `horizon' - `year0' + 1

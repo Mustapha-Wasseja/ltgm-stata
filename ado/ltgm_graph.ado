@@ -34,7 +34,7 @@ program define ltgm_graph
     /* ------------------------------------------------------------------ */
     /*  Validate variable name                                             */
     /* ------------------------------------------------------------------ */
-    local valid_vars "y_pc g_y g_Y ky pov s_t"
+    local valid_vars "y_pc g_y g_Y ky pov s_t kg_y kp_y pub_inv_t priv_inv_t total_inv_t g_kg g_kp g_ypc"
     local var_ok = 0
     foreach v of local valid_vars {
         if "`var'" == "`v'" {

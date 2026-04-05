@@ -25,4 +25,7 @@ f ado/ltgm_graph.sthlp
 f ado/ltgm_export.sthlp
 f ado/ltgm_import.sthlp
 f ado/ltgm_countries.sthlp
+f ado/ltgm_pc_run.ado
+f ado/ltgm_pc_run.sthlp
 f ado/ltgm_country_data.dta
+f ado/ltgm_pc_data.dta

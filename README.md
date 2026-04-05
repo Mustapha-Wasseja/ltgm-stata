@@ -53,13 +53,14 @@ ltgm_export, using(kenya_results.xlsx) scenarios(baseline high_inv)
 | `ltgm_export` | Export results to Excel (.xlsx) via `putexcel` |
 | `ltgm_import` | Load country parameters from bundled dataset (called internally by `ltgm_setup`) |
 | `ltgm_countries` | List available countries with key indicators (filterable by region or name) |
+| `ltgm_pc_run` | Public Capital model engine (called internally by `ltgm_run` for `model(pc)`) |
 
 ## Models Available
 
 | Model | Status |
 |---|---|
 | Standard (Solow) | **v1.0 -- Complete** |
-| Public Capital | Planned for v1.1 |
+| Public Capital | **v1.1 -- Complete** |
 | TFP Dimensions | Planned for v1.2 |
 | Human Capital (cohort-based) | Planned for v1.3 |
 | Natural Resources | Planned for v1.4 |

@@ -70,7 +70,19 @@ program define ltgm_export
         /*    putexcel A1 = (expression) for numbers                       */
         /* -------------------------------------------------------------- */
         * Row 1: metadata
-        quietly putexcel A1 = ("LTGM Standard Model Results")
+        * Detect model type
+        local _is_pc = 0
+        capture confirm variable kg_y
+        if _rc == 0 {
+            local _is_pc = 1
+        }
+
+        if `_is_pc' {
+            quietly putexcel A1 = ("LTGM Public Capital Model Results")
+        }
+        else {
+            quietly putexcel A1 = ("LTGM Standard Model Results")
+        }
         quietly putexcel A2 = ("Country:")
         quietly putexcel B2 = ("`country_lbl'")
         quietly putexcel A3 = ("Scenario:")
@@ -79,15 +91,30 @@ program define ltgm_export
         quietly putexcel B4 = ("`model_lbl'")
 
         * Row 6: column headers
-        quietly putexcel A6 = ("Year")
-        quietly putexcel B6 = ("GDP/cap")
-        quietly putexcel C6 = ("GDPpc Growth")
-        quietly putexcel D6 = ("GDP Growth")
-        quietly putexcel E6 = ("K/Y Ratio")
-        quietly putexcel F6 = ("Savings Rate")
-        quietly putexcel G6 = ("TFP Growth")
-        quietly putexcel H6 = ("Labour Growth")
-        quietly putexcel I6 = ("Poverty Rate")
+        if `_is_pc' {
+            quietly putexcel A6 = ("Year")
+            quietly putexcel B6 = ("GDP/cap")
+            quietly putexcel C6 = ("GDPpc Growth")
+            quietly putexcel D6 = ("GDP Growth")
+            quietly putexcel E6 = ("Kg/Y Ratio")
+            quietly putexcel F6 = ("Kp/Y Ratio")
+            quietly putexcel G6 = ("Pub Inv/GDP")
+            quietly putexcel H6 = ("Priv Inv/GDP")
+            quietly putexcel I6 = ("TFP Growth")
+            quietly putexcel J6 = ("Labour Growth")
+            quietly putexcel K6 = ("Poverty Rate")
+        }
+        else {
+            quietly putexcel A6 = ("Year")
+            quietly putexcel B6 = ("GDP/cap")
+            quietly putexcel C6 = ("GDPpc Growth")
+            quietly putexcel D6 = ("GDP Growth")
+            quietly putexcel E6 = ("K/Y Ratio")
+            quietly putexcel F6 = ("Savings Rate")
+            quietly putexcel G6 = ("TFP Growth")
+            quietly putexcel H6 = ("Labour Growth")
+            quietly putexcel I6 = ("Poverty Rate")
+        }
 
         /* -------------------------------------------------------------- */
         /*  Write data rows                                                */
@@ -98,13 +125,27 @@ program define ltgm_export
 
             quietly putexcel A`row' = (year[`i'])
             quietly putexcel B`row' = (y_pc[`i'])
-            quietly putexcel C`row' = (g_y[`i'])
-            quietly putexcel D`row' = (g_Y[`i'])
-            quietly putexcel E`row' = (ky[`i'])
-            quietly putexcel F`row' = (s_t[`i'])
-            quietly putexcel G`row' = (g_tfp_t[`i'])
-            quietly putexcel H`row' = (g_L_t[`i'])
-            quietly putexcel I`row' = (pov[`i'])
+
+            if `_is_pc' {
+                quietly putexcel C`row' = (g_ypc[`i'])
+                quietly putexcel D`row' = (g_Y[`i'])
+                quietly putexcel E`row' = (kg_y[`i'])
+                quietly putexcel F`row' = (kp_y[`i'])
+                quietly putexcel G`row' = (pub_inv_t[`i'])
+                quietly putexcel H`row' = (priv_inv_t[`i'])
+                quietly putexcel I`row' = (g_tfp_t[`i'])
+                quietly putexcel J`row' = (g_L_t[`i'])
+                quietly putexcel K`row' = (pov[`i'])
+            }
+            else {
+                quietly putexcel C`row' = (g_y[`i'])
+                quietly putexcel D`row' = (g_Y[`i'])
+                quietly putexcel E`row' = (ky[`i'])
+                quietly putexcel F`row' = (s_t[`i'])
+                quietly putexcel G`row' = (g_tfp_t[`i'])
+                quietly putexcel H`row' = (g_L_t[`i'])
+                quietly putexcel I`row' = (pov[`i'])
+            }
         }
 
         restore

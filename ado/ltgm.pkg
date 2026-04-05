@@ -2,14 +2,14 @@ v 3
 d ltgm - World Bank Long Term Growth Model (LTGM) Stata Package
 d
 d The LTGM Stata package implements the World Bank's Long Term Growth
-d Model (Standard / Solow variant) for growth projections, scenario
-d comparison, and poverty analysis.
+d Model (Standard and Public Capital variants) for growth projections,
+d scenario comparison, and poverty analysis.
 d
 d Includes bundled country data for 218 countries with auto-fill.
 d
 d Requires: Stata 13.0+
 d
-d Distribution-Date: 20260401
+d Distribution-Date: 20260404
 d
 f ltgm_setup.ado
 f ltgm_run.ado
@@ -25,4 +25,7 @@ f ltgm_graph.sthlp
 f ltgm_export.sthlp
 f ltgm_import.sthlp
 f ltgm_countries.sthlp
+f ltgm_pc_run.ado
+f ltgm_pc_run.sthlp
 f ltgm_country_data.dta
+f ltgm_pc_data.dta

@@ -55,18 +55,36 @@ program define ltgm_compare, rclass
     local nyears      = _N
     local horizon     = year[`nyears']
 
+    * Detect model type (standard vs PC)
+    local _is_pc = 0
+    capture confirm variable kg_y
+    if _rc == 0 {
+        local _is_pc = 1
+    }
+
     * Rename numeric variables with _base suffix
     rename y_pc    y_pc_base
     rename g_y     g_y_base
     rename g_Y     g_Y_base
-    rename ky      ky_base
-    rename s_t     s_t_base
-    rename g_tfp_t g_tfp_t_base
-    rename g_L_t   g_L_t_base
     rename pov     pov_base
 
-    * Keep only what we need for merge
-    keep year y_pc_base g_y_base g_Y_base ky_base s_t_base pov_base
+    if `_is_pc' {
+        rename kg_y       kg_y_base
+        rename kp_y       kp_y_base
+        rename pub_inv_t  pub_inv_base
+        rename priv_inv_t priv_inv_base
+        capture rename g_ypc g_ypc_base
+        capture rename g_L_t g_L_t_base
+        keep year y_pc_base g_y_base g_Y_base pov_base ///
+             kg_y_base kp_y_base pub_inv_base priv_inv_base
+    }
+    else {
+        rename ky      ky_base
+        rename s_t     s_t_base
+        capture rename g_tfp_t g_tfp_t_base
+        capture rename g_L_t   g_L_t_base
+        keep year y_pc_base g_y_base g_Y_base ky_base s_t_base pov_base
+    }
 
     tempfile base_tmp
     quietly save `base_tmp'
@@ -80,13 +98,25 @@ program define ltgm_compare, rclass
     rename y_pc    y_pc_alt
     rename g_y     g_y_alt
     rename g_Y     g_Y_alt
-    rename ky      ky_alt
-    rename s_t     s_t_alt
-    rename g_tfp_t g_tfp_t_alt
-    rename g_L_t   g_L_t_alt
     rename pov     pov_alt
 
-    keep year y_pc_alt g_y_alt g_Y_alt ky_alt s_t_alt pov_alt
+    if `_is_pc' {
+        rename kg_y       kg_y_alt
+        rename kp_y       kp_y_alt
+        rename pub_inv_t  pub_inv_alt
+        rename priv_inv_t priv_inv_alt
+        capture rename g_ypc g_ypc_alt
+        capture rename g_L_t g_L_t_alt
+        keep year y_pc_alt g_y_alt g_Y_alt pov_alt ///
+             kg_y_alt kp_y_alt pub_inv_alt priv_inv_alt
+    }
+    else {
+        rename ky      ky_alt
+        rename s_t     s_t_alt
+        capture rename g_tfp_t g_tfp_t_alt
+        capture rename g_L_t   g_L_t_alt
+        keep year y_pc_alt g_y_alt g_Y_alt ky_alt s_t_alt pov_alt
+    }
 
     * Merge on year
     quietly merge 1:1 year using `base_tmp', nogenerate
@@ -101,7 +131,15 @@ program define ltgm_compare, rclass
     quietly generate double pct_y_pc   = (y_pc_alt / y_pc_base - 1) * 100
     quietly generate double delta_g_y  = (g_y_alt - g_y_base) * 100
     quietly generate double delta_pov  = (pov_alt - pov_base) * 100
-    quietly generate double delta_ky   = ky_alt - ky_base
+
+    if `_is_pc' {
+        quietly generate double delta_kg_y    = kg_y_alt - kg_y_base
+        quietly generate double delta_kp_y    = kp_y_alt - kp_y_base
+        quietly generate double delta_pub_inv = (pub_inv_alt - pub_inv_base) * 100
+    }
+    else {
+        quietly generate double delta_ky   = ky_alt - ky_base
+    }
 
     * Add metadata labels
     quietly generate str20 model_lbl    = "`model_lbl'"
@@ -193,15 +231,26 @@ program define ltgm_compare, rclass
         local v_dypc_h  = delta_y_pc[`disp_nyears']
         local v_pypc_h  = pct_y_pc[`disp_nyears']
         local v_dpov_h  = delta_pov[`disp_nyears']
-        local v_dky_h   = delta_ky[`disp_nyears']
 
         display as text "  At horizon (`horizon'):"
         display as text "    GDP per capita difference : " ///
             as result "$" %10.2fc `v_dypc_h' as text " (" as result %6.2f `v_pypc_h' as text "%)"
         display as text "    Poverty headcount diff    : " ///
             as result %6.2f `v_dpov_h' as text " pp"
-        display as text "    K/Y ratio difference      : " ///
-            as result %6.3f `v_dky_h'
+
+        if `_is_pc' {
+            local v_dkgy_h = delta_kg_y[`disp_nyears']
+            local v_dkpy_h = delta_kp_y[`disp_nyears']
+            display as text "    Kg/Y difference           : " ///
+                as result %6.3f `v_dkgy_h'
+            display as text "    Kp/Y difference           : " ///
+                as result %6.3f `v_dkpy_h'
+        }
+        else {
+            local v_dky_h = delta_ky[`disp_nyears']
+            display as text "    K/Y ratio difference      : " ///
+                as result %6.3f `v_dky_h'
+        }
         display as text "{hline 80}"
         display ""
     }
@@ -225,6 +274,13 @@ program define ltgm_compare, rclass
     return scalar delta_y_pc     = delta_y_pc[`disp_nyears']
     return scalar pct_y_pc       = pct_y_pc[`disp_nyears']
     return scalar delta_pov      = delta_pov[`disp_nyears']
-    return scalar delta_ky       = delta_ky[`disp_nyears']
+
+    if `_is_pc' {
+        return scalar delta_kg_y = delta_kg_y[`disp_nyears']
+        return scalar delta_kp_y = delta_kp_y[`disp_nyears']
+    }
+    else {
+        return scalar delta_ky   = delta_ky[`disp_nyears']
+    }
 
 end
